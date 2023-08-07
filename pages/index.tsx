@@ -1,7 +1,37 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import { GrLocation } from 'react-icons/gr'
+import pikImage from '@/public/image-1.png'
+import kpImage from '@/public/image-2.png'
+import gsImage from '@/public/image-3.png'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter()
+
+  const locations = [
+    {
+      name: 'Pantai Indah Kapuk',
+      image: pikImage,
+      url: 'pik'
+    },
+    {
+      name: 'Kelapa Gading',
+      image: kpImage,
+      url: 'kelapa-gading'
+    },
+    {
+      name: 'Gading Serpong',
+      image: gsImage,
+      url: 'gading-serpong'
+    }
+  ]
+
+  const clickHandler = (name: string) => {
+    router.push(`/booking/${name}`)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -9,68 +39,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{` `}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <p className={styles.description}>This is not an official starter!</p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a href="https://github.com/vercel/next.js/tree/master/examples" className={styles.card}>
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=typescript-nextjs-starter"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-          </a>
-          <a
-            href="https://vercel.com/docs/concepts/functions/serverless-functions"
-            className={styles.card}
-          >
-            <h3>Serverless Function &rarr;</h3>
-            <p>Running code on-demand without needing to manage your own infrastructure.</p>
-          </a>
-          <a
-            href="https://vercel.com/docs/concepts/functions/edge-functions"
-            className={styles.card}
-          >
-            <h3>Edge Function &rarr;</h3>
-            <p>Deliver dynamic, personalized content with the lightweight Edge Runtime.</p>
-          </a>
+      <div className='px-8 py-3 w-[430px] shadow-md'>
+        <div className='w-full flex justify-between items-center mb-2'>
+          <div className='font-extrabold text-3xl text-[#404040] w-4/6'>Choose Your <span className='text-[#D6B87C]'>Place</span></div>
+          <GrLocation color='#757575' size={52} />
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=typescript-nextjs-starter"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{` `}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+        <div className='text-xs leading-5 mb-3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </div>
+        <div className='space-y-2 mb-3'>
+          {
+            locations.map((item, i) => {
+              return (
+                <div key={i}>
+                  <Image className='cursor-pointer' src={item.image} width={360} height={120} alt={item.name} onClick={() => { clickHandler(item.url) }} />
+                </div>
+              )
+            })
+          }
+        </div>
+        <div className='text-center py-6'>Read our <span className='text-[#3267E3] cursor-pointer'>Terms & Conditions, Privacy Policy</span></div>
+      </div>
     </div>
   )
 }
